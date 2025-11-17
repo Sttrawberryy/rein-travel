@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tour ke Jepang | Sakura Travel</title>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🌸 Rein Travel Japan 🌸</h1>
+      <nav>
+        <a href="#about"><i data-feather="feather"></i></a>
+        <a href="#packages"><i data-feather="package"></i></a>
+        <a href="#booking"><i data-feather="booking"></i></a>
+        <a href="#contact"><i data-feather="shopping-cart"></i></a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Jelajahi Keindahan Jepang Bersama Kami!</h2>
+        <p>
+          Nikmati pengalaman tak terlupakan — dari bunga sakura hingga salju
+          Hokkaido.
+        </p>
+        <a href="#packages" class="btn">Lihat Paket Wisata</a>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <h2>Tentang Kami</h2>
+      <p>
+        Sakura Travel menghadirkan perjalanan eksklusif ke berbagai destinasi
+        menakjubkan di Jepang. Rasakan budaya, kuliner, dan keindahan alam
+        negeri sakura dengan pelayanan terbaik dari kami.
+      </p>
+      <img
+        src="https://images.unsplash.com/photo-1549693578-d683be217e58?auto=format&fit=crop&w=900&q=60"
+        alt="Gunung Fuji"
+      />
+    </section>
+
+    <section id="packages" class="packages">
+      <h2>Paket Wisata Populer</h2>
+      <div class="package-list">
+        <div class="package">
+          <img
+            src="https://images.unsplash.com/photo-1549692520-acc6669e2f0c?auto=format&fit=crop&w=900&q=60"
+            alt="Tokyo"
+          />
+          <h3>Tokyo Delight</h3>
+          <p>
+            5 Hari 4 Malam — Jelajahi Shibuya, Asakusa, dan Tokyo Disneyland!
+          </p>
+        </div>
+
+        <div class="package">
+          <img
+            src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=900&q=60"
+            alt="Kyoto"
+          />
+          <h3>Kyoto Heritage</h3>
+          <p>
+            4 Hari 3 Malam — Nikmati keindahan kuil, taman zen, dan budaya
+            tradisional Kyoto.
+          </p>
+        </div>
+
+        <div class="package">
+          <img
+            src="https://images.unsplash.com/photo-1610957386668-dd266c45734d?auto=format&fit=crop&w=900&q=60"
+            alt="Hokkaido"
+          />
+          <h3>Hokkaido Snow</h3>
+          <p>
+            6 Hari 5 Malam — Petualangan salju, onsen hangat, dan pemandangan
+            pegunungan.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="booking">
+      <h2>Formulir Pemesanan</h2>
+      <form>
+        <label>Nama Lengkap</label>
+        <input type="text" placeholder="Masukkan nama anda" required />
+
+        <label>Email</label>
+        <input type="email" placeholder="Masukkan email" required />
+
+        <label>Pilih Paket</label>
+        <select>
+          <option>Tokyo Delight</option>
+          <option>Kyoto Heritage</option>
+          <option>Hokkaido Snow</option>
+        </select>
+
+        <label>Tanggal Keberangkatan</label>
+        <input type="date" required />
+
+        <button type="submit" class="btn">Kirim Pemesanan</button>
+      </form>
+    </section>
+
+    <footer id="contact">
+      <p>
+        🌸 Rein Travel Japan 🌸 &copy 2020 | Hubungi kami di
+        <a href="mailto:sverine34@gmail.com">info@reintravel.jp</a>
+      </p>
+    </footer>
+    <script>
+      feather.replace();
+    </script>
+
+    <script>
+      const scriptURL =
+        "https://script.google.com/macros/s/AKfycbzRh_7Buwt-MqeIZKAZJCbg8gsuMx78wu0uiPqF5SOdW-jd8ePVLdlYN65gHCn45TAn/exec";
+
+      document.querySelector("form").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = {
+          nama: document.querySelector('input[type="text"]').value,
+          email: document.querySelector('input[type="email"]').value,
+          paket: document.querySelector("select").value,
+          tanggal: document.querySelector('input[type="date"]').value,
+        };
+
+        fetch(scriptURL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        })
+          .then(() => {
+            alert("Pemesanan berhasil dikirim!");
+            document.querySelector("form").reset();
+          })
+          .catch(() => alert("Terjadi kesalahan!"));
+      });
+    </script>
+  </body>
+</html>
