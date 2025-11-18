@@ -114,32 +114,49 @@
       feather.replace();
     </script>
 
-    <script>
-      const scriptURL =
-        "https://script.google.com/macros/s/AKfycbzRh_7Buwt-MqeIZKAZJCbg8gsuMx78wu0uiPqF5SOdW-jd8ePVLdlYN65gHCn45TAn/exec";
+<script>
+  const scriptURL =
+    "https://script.google.com/macros/s/AKfycbzRh_7Buwt-MqeIZKAZJCbg8gsuMx78wu0uiPqF5SOdW-jd8ePVLdlYN65gHCn45TAn/exec";
 
-      document.querySelector("form").addEventListener("submit", function (e) {
-        e.preventDefault();
+  const WA_NUMBER = "6282132943612"; // GANTI DENGAN NOMOR ADMIN
 
-        const data = {
-          nama: document.querySelector('input[type="text"]').value,
-          email: document.querySelector('input[type="email"]').value,
-          paket: document.querySelector("select").value,
-          tanggal: document.querySelector('input[type="date"]').value,
-        };
+  document.querySelector("form").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-        fetch(scriptURL, {
-          method: "POST",
-          mode: "no-cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        })
-          .then(() => {
-            alert("Pemesanan berhasil dikirim!");
-            document.querySelector("form").reset();
-          })
-          .catch(() => alert("Terjadi kesalahan!"));
-      });
-    </script>
+    const nama = document.querySelector('input[type="text"]').value;
+    const email = document.querySelector('input[type="email"]').value;
+    const paket = document.querySelector("select").value;
+    const tanggal = document.querySelector('input[type="date"]').value;
+
+    const data = { nama, email, paket, tanggal };
+
+    // ====== KIRIM KE GOOGLE SHEET ======
+    fetch(scriptURL, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+      .then(() => {
+        // ====== FORMAT PESAN WHATSAPP ======
+        const msg =
+          `Halo, saya ingin memesan paket wisata:%0A` +
+          `Nama: ${nama}%0A` +
+          `Email: ${email}%0A` +
+          `Paket: ${paket}%0A` +
+          `Tanggal: ${tanggal}`;
+
+        const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+
+        // BUKA WHATSAPP
+        window.open(waLink, "_blank");
+
+        alert("Pemesanan berhasil dikirim!");
+        document.querySelector("form").reset();
+      })
+      .catch(() => alert("Terjadi kesalahan!"));
+  });
+</script>
+
   </body>
 </html>
