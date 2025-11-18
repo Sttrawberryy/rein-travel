@@ -118,7 +118,7 @@
   const scriptURL =
     "https://script.google.com/macros/s/AKfycbzRh_7Buwt-MqeIZKAZJCbg8gsuMx78wu0uiPqF5SOdW-jd8ePVLdlYN65gHCn45TAn/exec";
 
-  const WA_NUMBER = "6282132943612"; // GANTI DENGAN NOMOR ADMIN
+  const WA_NUMBER = "6282132943612"; // ganti nomormu
 
   document.querySelector("form").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -130,7 +130,7 @@
 
     const data = { nama, email, paket, tanggal };
 
-    // ====== KIRIM KE GOOGLE SHEET ======
+    // Kirim ke Google Sheet
     fetch(scriptURL, {
       method: "POST",
       mode: "no-cors",
@@ -138,7 +138,7 @@
       body: JSON.stringify(data),
     })
       .then(() => {
-        // ====== FORMAT PESAN WHATSAPP ======
+        // Format WhatsApp
         const msg =
           `Halo, saya ingin memesan paket wisata:%0A` +
           `Nama: ${nama}%0A` +
@@ -146,9 +146,21 @@
           `Paket: ${paket}%0A` +
           `Tanggal: ${tanggal}`;
 
-        const waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+        // Deteksi apakah user memakai HP
+        const isMobile = /Android|iPhone|iPad|iPod|Windows Phone/i.test(
+          navigator.userAgent
+        );
 
-        // BUKA WHATSAPP
+        let waLink = "";
+
+        if (isMobile) {
+          // HP → buka aplikasi WhatsApp
+          waLink = `https://wa.me/${WA_NUMBER}?text=${msg}`;
+        } else {
+          // Desktop → buka WhatsApp Web
+          waLink = `https://web.whatsapp.com/send?phone=${WA_NUMBER}&text=${msg}`;
+        }
+
         window.open(waLink, "_blank");
 
         alert("Pemesanan berhasil dikirim!");
@@ -157,6 +169,7 @@
       .catch(() => alert("Terjadi kesalahan!"));
   });
 </script>
+
 
   </body>
 </html>
